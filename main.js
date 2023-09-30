@@ -42,6 +42,8 @@ const map = new maplibregl.Map({
       "https://api.maptiler.com/maps/streets/style.json?key=lGyZIDbsdOlBcyjI2Xtm",
   });
 
+
+
 // Create geolocate control to the map.
 const geolocate = new maplibregl.GeolocateControl({
   positionOptions: {
@@ -175,6 +177,8 @@ map.on("click", "counties-extrusion", (e) => {
   
       // Extract the properties you want to display in the popup
       const { name, pop, density } = feature.properties;
+
+      const area = turfArea(feature)
   
       // Build the popup content
       const popupContent = `
@@ -184,6 +188,7 @@ map.on("click", "counties-extrusion", (e) => {
           <p>Density: ${Number(
             density
           ).toLocaleString()} workers mi<sup>2</sup></p>
+          <p>Area sq mi: ${Number (area)/2589988.1103}</p>
         </div>
       `;
   
