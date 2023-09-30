@@ -1,7 +1,7 @@
-import "./maplibre-gl/dist/maplibre-gl.css";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./style.css";
-import maplibregl from "./maplibre-gl";
-import chroma from "./chroma-js";
+import maplibregl from "maplibre-gl";
+import chroma from "chroma-js";
 import turfArea from "@turf/area";
 
 let hoveredStateId = null;
