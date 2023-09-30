@@ -2,31 +2,80 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./style.css";
 import maplibregl from "maplibre-gl";
 import chroma from "chroma-js";
+import turfArea from "@turf/area";
 
 let hoveredStateId = null;
 
-const breaks = [50, 100, 500, 2000, 4000, 8000, 75000];
+const openUI = () => {
+  offCanvas.classList.remove("translate-x-[-100%]");
+  overlay.classList.remove("opacity-0");
+  offCanvas.classList.add(
+    "translate-x-0",
+    "transition-transform",
+    "duration-300",
+    "ease-in-out"
+  );
+  overlay.classList.add("opacity-100", "pointer-events-auto");
+};
+
+const closeUI = () => {
+  offCanvas.classList.remove("translate-x-0");
+  overlay.classList.remove("opacity-100", "pointer-events-auto");
+  offCanvas.classList.add("translate-x-[-100%]");
+  overlay.classList.add("opacity-0");
+};
+
+openButton.addEventListener("click", openUI);
+overlay.addEventListener("click", closeUI);
+closeButton.addEventListener("click", closeUI);
+
+const breaks = [1.22, 2.69, 4.4, 7.08, 16.29, 33.45, 84.28];
 
 const colorScale = chroma.scale("Blues").domain([0, 6]);
 console.log(colorScale(6).hex()); // returns #08519c
 
 const map = new maplibregl.Map({
     container: "map",
-    center: [-90, 38],
-    zoom: 4,
+    center: [-85.4669, 37.80923],
+    zoom: 6.5,
     style:
       "https://api.maptiler.com/maps/streets/style.json?key=lGyZIDbsdOlBcyjI2Xtm",
   });
 
+// Create geolocate control to the map.
+const geolocate = new maplibregl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true,
+  },
+  fitBoundsOptions: {
+    maxZoom: 12,
+  },
+  trackUserLocation: true,
+});
+
+// Create a navigation control.
+const nav = new maplibregl.NavigationControl();
+
+// Create a scale control.
+const scale = new maplibregl.ScaleControl({
+  maxWidth: 80,
+  unit: "imperial",
+});
+
+// Add controls to the map.
+map.addControl(scale);
+map.addControl(nav);
+map.addControl(geolocate)
+
   map.on("load", function () {
     map.addSource("counties", {
       type: "geojson",
-      data: "./us-counties-optimized.json",
+      data: "./KentuckyTransportationWarehousingUtilities.geojson",
       promoteId: "geoid",
     });
     map.addSource("states", {
       type: "geojson",
-      data: "./us-states-optimized.json",
+      data: "./KentuckyMajorHighways.geojson",
     });
     map.addLayer({
       id: "counties-extrusion",
@@ -44,13 +93,15 @@ const map = new maplibregl.Map({
             ["to-number", ["get", "pop"]],
             0,
             colorScale(0).hex(),
-            1000000,
+            100,
+            colorScale(2).hex(),
+            1000,
             colorScale(4).hex(),
-            10000000,
+            10000,
             colorScale(6).hex(),
           ],
         ],
-        "fill-extrusion-height": ["*", ["to-number", ["get", "density"]], 10],
+        "fill-extrusion-height": ["*", ["to-number", ["get", "density"]], 100],
         "fill-extrusion-base": 0,
         "fill-extrusion-opacity": [
           "interpolate",
@@ -76,8 +127,8 @@ const map = new maplibregl.Map({
           "line-cap": "round",
         },
         paint: {
-          "line-color": "#888",
-          "line-width": 0.4,
+          "line-color": "#FFFFFF",
+          "line-width": 1,
         },
       });
   });
@@ -98,9 +149,6 @@ map.on("mousemove", "counties-extrusion", (e) => {
 map.on("mouseleave", "counties-extrusion", (e) => {
     map.getCanvas().style.cursor = "";
   });
-
-// Add zoom and rotation controls to the map.
-map.addControl(new maplibregl.NavigationControl());
 
 // Add an event listener for 'click' event on the polygon layer
 map.on("click", "counties-extrusion", (e) => {
@@ -132,10 +180,10 @@ map.on("click", "counties-extrusion", (e) => {
       const popupContent = `
         <h3 class="font-bold">${name}</h3>
         <div class="leading-snug">
-          <p>Population: ${Number(pop).toLocaleString()}</p>
+          <p>Total Workers: ${Number(pop).toLocaleString()}</p>
           <p>Density: ${Number(
             density
-          ).toLocaleString()} people mi<sup>2</sup></p>
+          ).toLocaleString()} workers mi<sup>2</sup></p>
         </div>
       `;
   

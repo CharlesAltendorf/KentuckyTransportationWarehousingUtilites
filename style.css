@@ -1,9 +1,25 @@
-#map {
-  height: 800px;
-  width: 100%;
-}
-
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cabin|Roboto:400,700|Roboto+Condensed:400,700");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1 {
+  font-family: "Cabin", sans-serif;
+  font-weight: 800;
+  font-size: 100%;
+}
+h2 {
+  font-family: "Cabin", sans-serif;
+  font-weight: 400;
+  font-size: 100%;
+}
+#title {
+  height: 25%;
+  width: 100%;
+}
+
+#map {
+  height: 75%;
+  width: 100%;
+}

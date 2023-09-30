@@ -2,12 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./NMPLogo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Kentucky Transportation, Warehousing, and Utility Workers, 2020</title>
   </head>
   <body>
-    <div id="map" class="h-screen w-screen"></div>
+    <div id="title" class="fixed top-0 z-20 bg-blue-600 text-white font-bold text-center text-4xl">
+      <h1>Kentucky Transportation, Warehousing, and Utility Workers, 2020</h1>
+    </div>
+    <div id="map" class="fixed bottom-0"></div>
+    <button  id="openButton"  class="fixed top-2 left-2 z-20 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow">Info</button>
+    <div id="offCanvas" class="fixed top-0 left-0 z-30 w-full sm:w-1/2 h-screen bg-white shadow-lg overflow-y-auto p-2 transform translate-x-[-100%] text-blue-500">
+      <h1>Kentucky Transportation, Warehousing, and Utility Workers, 2020</h1>
+      <h2>You can right click the map for 3D modeling</h2>
+      <h2>Sources:</h2>
+      <p>Percent!!INDUSTRY!!Civilian employed population 16 years and over!!Transportation and warehousing, and utilities.  
+        Variable DP03_0038 E <a class="text-yellow-500 underline hover:text-yellow-500 hover:no-underline"
+        href="https://api.census.gov/data/2020/acs/acs5/profile/variables.html">
+        Workforce data from 2020 Census API</a></p>
+      <p>Divided Highways <a class="text-yellow-500 underline hover:text-yellow-500 hover:no-underline"
+        href="https://transportation.ky.gov/Planning/Pages/Centerlines.aspx">
+        Centerlines from KYTC website</a></p>
+      <ul class="list-unstyled">
+          <li>
+              Check out my GitHub portfolio @<a href="https://charlesaltendorf.github.io/">CharlesAltendorf</a>
+          </li>
+          <li>
+              Linkedin @<a href="https://www.linkedin.com/in/charles-altendorf/">Charles Altendorf</a>
+          </li>
+          <li>
+              Check out student maps @<a href="https://newmapsplus.github.io/projects/">NewMapsPlus</a>
+          </li>
+        </ul>
+    </div>
+    <div id="closeButton" class="flex justify-start text-3xl ml-2 text-zinc-600 cursor-pointer">&times;</div>
+    <div id="overlay" class="fixed top-0 left-0 z-10 w-screen h-screen bg-gray-800 bg-opacity-50 opacity-0 pointer-events-none"></div>
     <script type="module" src="main.js"></script>
   </body>
 </html>

@@ -15,6 +15,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "@turf/area": "^6.5.0",
     "chroma-js": "^2.4.2",
     "maplibre-gl": "^3.3.1"
   }
